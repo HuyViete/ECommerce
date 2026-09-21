@@ -1,0 +1,12 @@
+User-agent: *
+Disallow: /products/
+Disallow: /api/
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /

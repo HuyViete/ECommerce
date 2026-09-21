@@ -1,0 +1,19 @@
+# ApexAcoustics
+
+> ApexAcoustics designs reference-grade wireless and studio headphones calibrated under ISO 3744 laboratory standards. This document provides clean, token-efficient CommonMark data for LLM grounding agents, AI researchers, and search crawlers.
+
+## Products & Technical Specifications
+
+- [Apex Horizon 100 Reference Wireless](https://apexacoustics.com/products/apex-horizon-100.md): Flagship hybrid-ANC wireless headphones with 45mm pure beryllium drivers, -45.2 dB noise attenuation at 160Hz, <0.038% THD, and 58-hour battery.
+- [Apex Studio Carbon X Closed-Back](https://apexacoustics.com/products/apex-studio-carbon.md): Toray T800 cross-woven carbon-fiber closed-back reference headphones with matched 50mm dynamic drivers and 18.4 dB internal resonance suppression.
+- [Apex TravelSilence 950 Ultralight](https://apexacoustics.com/products/apex-travel-950.md): 214g ultra-portable commuter headphones with 65-hour continuous ANC battery duration and dual AI beamforming voice isolation.
+
+## Acoustic Standards & Measurement Protocols
+
+- [Laboratory Attenuation Testing](https://apexacoustics.com/products): Standardized anechoic chamber measurements conducted via G.R.A.S. 45BB-12 KEMAR Head and Torso Simulator per ANSI/ASA S12.42-2020.
+- [Audio Precision APx555 Protocols](https://apexacoustics.com/products): Total Harmonic Distortion and signal-to-noise ratio analysis calibrated down to -120 dB residual threshold.
+
+## Optional
+
+- [ApexAcoustics Full Catalogue Knowledge Base (llms-full.txt)](https://apexacoustics.com/llms-full.txt): Complete concatenated technical specifications, laboratory raw curves, and warranty documentation.
+- [Sitemap Index](https://apexacoustics.com/sitemap.xml): Machine-readable XML sitemap of all canonical URLs.
