@@ -2,121 +2,146 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchFeaturedProducts } from '../utils/mockApi';
 import { ProductCardDiv } from '../components/ProductCardDiv';
-import { TokenBloatBadge, MassiveTokenBloatWaveform } from '../components/TokenBloatBadge';
-import { Sparkles, ArrowRight, ShieldAlert, Zap, Compass, VolumeX, Award } from 'lucide-react';
+import { 
+  ArrowRight, 
+  Layers, 
+  Sparkles, 
+  CheckCircle2, 
+  AlertTriangle,
+  Award,
+  Gauge,
+  FileText
+} from 'lucide-react';
 
 /**
- * HomePage:
- * Anti-patterns:
- * - NO <h1> tag for page title (uses stylized <div>)
- * - NO <section> or <article> semantic containers
- * - Fetches featured products via client-side 1.5s artificial setTimeout
- * - Hyperbolic fluff copywriting violating Aggarwal et al. (KDD 2024)
- * - Low-contrast keyword stuffing blocks
+ * HomePage (Twin Site Clone):
+ * Visually mirrors good/app/page.tsx with the exact same headline, copy, and layout.
+ * Under the hood:
+ * 1. 100% Div Soup (zero <h1>, <h2>, <section>, <header>, or <a> tags).
+ * 2. CSR Trap: 1500ms delay + synchronous CPU block.
+ * 3. Violent CLS (>0.8): An unreserved top announcement banner pops in after 1s, shifting the layout.
+ * 4. Zero Schema.org JSON-LD scripts.
  */
 export function HomePage({ onAddToCart }) {
   const navigate = useNavigate();
   const [featured, setFeatured] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showShiftBanner, setShowShiftBanner] = useState(false);
 
   useEffect(() => {
-    // Client-Side Rendering Trap: Artificial 1.5s delay
+    // Artificial 1500ms client hydration delay
     fetchFeaturedProducts().then((data) => {
       setFeatured(data);
       setLoading(false);
     });
+
+    // Deliberate Cumulative Layout Shift (CLS) trigger
+    const timer = setTimeout(() => {
+      setShowShiftBanner(true);
+    }, 1100);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="home-page-unsemantic-container space-y-24">
+    <div className="home-unsemantic-outer space-y-20 pb-20">
       
-      {/* Hero Section - Zero <header> or <h1> */}
-      <div className="hero-unsemantic-outer relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-32">
-        
-        {/* Glow ambient backdrops */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-purple-600/15 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute top-1/3 left-1/3 w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
+      {/* CUMULATIVE LAYOUT SHIFT (CLS) TRAP: Unreserved banner that shifts layout down */}
+      {showShiftBanner && (
+        <div className="w-full bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 text-white text-center py-4 px-4 font-mono text-xs shadow-2xl flex items-center justify-center gap-3 animate-bounce">
+          <AlertTriangle className="w-4 h-4 text-amber-300" />
+          <span className="font-bold">SYSTEM NOTICE: Client-side dynamic banner injected without reserved DOM height (Triggering CLS penalty).</span>
+        </div>
+      )}
 
+      {/* Hero Section - <div> substitute for <section> */}
+      <div className="hero-unsemantic-block relative overflow-hidden pt-12 sm:pt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col items-center text-center space-y-8 max-w-4xl mx-auto">
+          <div className="max-w-3xl space-y-6">
             
-            <div className="flex items-center gap-2">
-              <TokenBloatBadge label="NEW TRANSCENDENCE ARRIVAL" variant="purple" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/80 border border-blue-500/30 text-blue-300 text-xs font-mono">
+              <Layers className="w-3.5 h-3.5" />
+              <span>Acoustic Transducer Reference Matrix</span>
             </div>
 
             {/* Title substitute - <div> instead of <h1> */}
-            <div className="hero-title-div text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.1]">
-              Hear The Sound That <br />
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-                Defies Human Physics
+            <div className="text-4xl sm:text-6xl font-black text-white tracking-tight leading-[1.1]">
+              Reference Acoustic Transducers{' '}
+              <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-emerald-400 bg-clip-text text-transparent">
+                Backed by Empirical Science
               </span>
             </div>
 
-            {/* Hyperbolic non-verifiable description */}
-            <div className="text-lg sm:text-xl text-slate-300 max-w-2xl font-normal leading-relaxed">
-              Experience the single greatest wireless listening instrument ever constructed by mortal hands. 
-              Zero laboratory measurements needed—simply immerse your consciousness in pure celestial euphoria.
+            <div className="text-lg text-slate-300 leading-relaxed">
+              ApexAcoustics engineers reference wireless transducers certified under ISO 3744 laboratory conditions. 
+              We replace subjective audio marketing fluff with verifiable active noise attenuation curves, laser-calibrated harmonic distortion data, and atomic use-case constraint boundaries.
             </div>
 
             {/* Action buttons - purely <div> tags */}
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+            <div className="flex flex-wrap items-center gap-4 pt-2">
               <div
                 onClick={() => navigate('/products')}
-                className="px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 text-white font-bold text-base shadow-xl shadow-purple-600/30 hover:shadow-purple-600/50 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer flex items-center gap-2"
+                className="px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold flex items-center gap-2 shadow-lg shadow-blue-600/30 transition-all cursor-pointer select-none"
               >
-                <span>Explore The Fluff Catalogue</span>
-                <ArrowRight className="w-5 h-5" />
+                <span>Inspect Transducer Catalog</span>
+                <ArrowRight className="w-4 h-4" />
               </div>
 
               <div
-                onClick={() => navigate('/products/celestial-fluff-pro')}
-                className="px-8 py-4 rounded-2xl bg-slate-900/80 border border-slate-700/80 hover:border-purple-500/50 text-slate-200 font-semibold text-base hover:bg-slate-800/80 transition-all cursor-pointer flex items-center gap-2"
+                onClick={() => window.open('/robots.txt', '_blank')}
+                className="px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold flex items-center gap-2 border border-slate-700 transition-colors cursor-pointer select-none"
               >
-                <span>Inspect Flagship Miracle</span>
+                <FileText className="w-4 h-4 text-emerald-400" />
+                <span>View /robots.txt Node</span>
               </div>
             </div>
 
-            {/* Quick Benchmark clue */}
-            <div className="pt-4 flex items-center gap-2 text-xs font-mono text-slate-500">
-              <ShieldAlert className="w-3.5 h-3.5 text-rose-500" />
-              <span>Empty raw HTML baseline • 0% Pre-rendered server text</span>
+            <div className="pt-4 flex flex-wrap gap-6 text-xs text-slate-400 font-mono">
+              <div className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-blue-400" />
+                <span>Client-Side Hydration (SPA)</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-blue-400" />
+                <span>Zero Pre-rendered Text</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-blue-400" />
+                <span>Unsemantic Div-Soup Layout</span>
+              </div>
             </div>
 
           </div>
         </div>
-
       </div>
 
-      {/* Heavy non-semantic waveform */}
-      <MassiveTokenBloatWaveform />
-
-      {/* Featured Products Section - Zero <section> or <h2> */}
-      <div className="featured-unsemantic-outer max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
+      {/* Featured Products Catalog Section - <div> substitute */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            {/* Subtitle substitute - <div> instead of <h2> */}
-            <div className="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-2">
-              <Sparkles className="w-6 h-6 text-purple-400" />
-              <span>Flagship Acoustic Blessings</span>
+            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-blue-400 mb-1">
+              <Gauge className="w-4 h-4" />
+              <span>Laboratory Verified Products</span>
             </div>
-            <div className="text-sm text-slate-400 mt-1">
-              Guaranteed 0% technical specifications. 100% pure celestial prose.
+            {/* <div> instead of <h2> */}
+            <div className="text-3xl font-black text-white">
+              Reference Headphone Lineup
             </div>
           </div>
 
           <div
             onClick={() => navigate('/products')}
-            className="text-sm font-semibold text-purple-400 hover:text-purple-300 flex items-center gap-1 cursor-pointer"
+            className="text-sm font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1 cursor-pointer"
           >
-            <span>View All Miracles</span>
+            <span>Explore All 3 Calibrated Models</span>
             <ArrowRight className="w-4 h-4" />
           </div>
         </div>
 
-        {/* Client-Side Rendering Trap: Spinner while 1.5s delay passes */}
+        {/* Client-Side Rendering Trap: Spinner while delay passes */}
         {loading ? (
           <div className="py-20 flex flex-col items-center justify-center space-y-4 rounded-2xl bg-[#0f0f1b]/50 border border-slate-800/60">
-            <div className="w-10 h-10 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin" />
+            <div className="w-10 h-10 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
             <div className="text-sm font-mono text-slate-400 animate-pulse">
               Hydrating products via client-side useEffect (1.5s delay)...
             </div>
@@ -137,54 +162,46 @@ export function HomePage({ onAddToCart }) {
         )}
       </div>
 
-      {/* Fluff Philosophy Section - Anti-GEO violations */}
-      <div className="philosophy-unsemantic-block max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl p-8 sm:p-12 glass-panel border border-[#23233c] relative overflow-hidden">
+      {/* Research Comparison Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="rounded-3xl p-8 sm:p-12 bg-slate-900/70 border border-slate-800 space-y-8">
           
-          <div className="max-w-3xl space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-300 text-xs font-mono">
-              <Compass className="w-3.5 h-3.5" />
-              <span>The Anti-Metric Philosophy</span>
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 text-xs font-mono">
+              <Award className="w-3.5 h-3.5" />
+              <span>Empirical Differential Test Matrix</span>
             </div>
-
-            {/* Header substitute */}
             <div className="text-2xl sm:text-4xl font-extrabold text-white">
-              Why We Ban All Decibels, Milliamps, and Laboratory Numbers
+              Research Comparison: Flawed SPA (bad/) vs GEO Benchmark (good/)
             </div>
-
-            {/* Deliberate violation of Aggarwal et al. (KDD 2024) GEO benchmarks */}
-            <div className="text-slate-300 space-y-4 text-base leading-relaxed">
-              <p>
-                Conventional headphone corporations bore consumers with dry, mortal statistics: "40mm dynamic drivers," "32dB hybrid noise cancelling," "450mAh lithium ion cells."
-              </p>
-              <p>
-                At AudioFluff, our design philosophy strictly forbids verifiable numbers. Numbers restrict the soul. Our acoustic cushions are woven from quantum cloud particles that deliver an unmeasurable, infinite sensation of joy. 
-              </p>
-              <p className="font-semibold text-purple-300">
-                These are undeniably the greatest headphones ever made by human hands. Anyone asking for laboratory frequency curves simply fails to understand true cosmic audio.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
-              <div className="p-4 rounded-xl bg-[#0b0b14] border border-slate-800 space-y-1">
-                <VolumeX className="w-5 h-5 text-purple-400" />
-                <div className="text-sm font-bold text-white">0% Measured Decibels</div>
-                <div className="text-xs text-slate-400">Total void silence without scientific proof</div>
-              </div>
-              <div className="p-4 rounded-xl bg-[#0b0b14] border border-slate-800 space-y-1">
-                <Zap className="w-5 h-5 text-cyan-400" />
-                <div className="text-sm font-bold text-white">Infinite Battery Fluff</div>
-                <div className="text-xs text-slate-400">Runs forever on spiritual momentum</div>
-              </div>
-              <div className="p-4 rounded-xl bg-[#0b0b14] border border-slate-800 space-y-1">
-                <Award className="w-5 h-5 text-pink-400" />
-                <div className="text-sm font-bold text-white">Zero Authoritative Citations</div>
-                <div className="text-xs text-slate-400">Pure unvetted subjective testimonials</div>
-              </div>
-            </div>
-
+            <p className="text-sm text-slate-300 max-w-3xl leading-relaxed">
+              This repository provides a verifiable side-by-side demonstration of the difference between traditional search failure modes and modern Generative Engine Optimization (GEO).
+            </p>
           </div>
 
+          <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2 text-xs font-mono text-slate-400">
+            <div className="text-amber-400 font-bold flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4" />
+              <span>Live Demonstration Flaw Checklist:</span>
+            </div>
+            <ul className="list-disc list-inside space-y-1 text-slate-400">
+              <li>Raw HTML (curl -s): Empty &lt;div id="root"&gt; container (0 bytes pre-rendered text).</li>
+              <li>Google Rich Results: 0 schemas detected (Zero JSON-LD script).</li>
+              <li>Robots.txt: Blocked crawlers and AI search bots.</li>
+              <li>Core Web Vitals: High CLS, delayed LCP, and blocking main thread tasks.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Keyword Stuffing Layer */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <div className="text-[10px] uppercase tracking-widest text-slate-700 font-mono mb-1">
+          Embedded Keyword Repetition Block (Violating Google Search Spam Guidelines):
+        </div>
+        <div className="p-3 rounded-lg bg-black/40 border border-slate-900 text-[10px] text-slate-700 leading-relaxed font-mono">
+          best wireless headphones buy online cheap reference headphones bluetooth headphones sale best anc headphones high quality headphones apex horizon wireless headphones discount headphones buy online best audio high quality headphones
         </div>
       </div>
 

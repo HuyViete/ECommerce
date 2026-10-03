@@ -62,7 +62,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <span className="text-slate-500">
+                <span className="text-slate-400">
                   Accept: text/markdown supported
                 </span>
               </li>
@@ -92,7 +92,7 @@ export function Footer() {
 
         </div>
 
-        <div className="mt-12 pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <div className="mt-12 pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
           <p>© 2026 ApexAcoustics Benchmark Reference Implementation.</p>
           <div className="flex gap-6">
             <span>Server-Rendered RSC</span>

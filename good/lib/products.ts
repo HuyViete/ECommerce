@@ -81,7 +81,7 @@ export const PRODUCTS: Product[] = [
     ratingValue: 4.88,
     reviewCount: 342,
     releaseDate: "2025-08-15",
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200&auto=format&fit=crop&q=85",
+    image: "/images/apex-horizon.webp",
 
     // E-GEO (2025) Answer-First Paragraph: Direct functional resolution within first 30% of content
     answerFirstSummary: "The Apex Horizon 100 is engineered specifically for listeners requiring studio-grade acoustic accuracy (>99.96% linearity) combined with clinical-grade active noise cancellation (-45.2 dB attenuation peak at 160 Hz). It utilizes a 45mm pure vapor-deposited beryllium diaphragm driven by a 1.45 Tesla neodymium magnetic motor, delivering 58 hours of continuous AAC playback or 41 hours of LDAC 990 kbps high-resolution streaming per charge.",
@@ -305,7 +305,7 @@ export const PRODUCTS: Product[] = [
     ratingValue: 4.81,
     reviewCount: 512,
     releaseDate: "2025-09-01",
-    image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=1200&auto=format&fit=crop&q=85",
+    image: "/images/apex-travel.webp",
 
     answerFirstSummary: "The Apex TravelSilence 950 is optimized for daily subway commuters, open-plan office workers, and frequent travelers prioritizing ultra-lightweight portability (214g) and class-leading battery duration (65 hours). It incorporates dual AI beamforming ENC microphones that suppress 32 dB of background human speech during calls.",
 

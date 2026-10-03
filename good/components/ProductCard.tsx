@@ -34,7 +34,7 @@ export function ProductCard({ product }: Props) {
             <div className="flex items-center gap-1 text-amber-400" aria-label={`Rating: ${product.ratingValue} out of 5 stars`}>
               <Star className="w-3.5 h-3.5 fill-amber-400" aria-hidden="true" />
               <span className="font-bold">{product.ratingValue}</span>
-              <span className="text-slate-500">({product.reviewCount})</span>
+              <span className="text-slate-400">({product.reviewCount})</span>
             </div>
           </div>
 
@@ -64,7 +64,7 @@ export function ProductCard({ product }: Props) {
         {/* Price & Primary Link */}
         <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-xs text-slate-500 line-through">
+            <span className="text-xs text-slate-400 line-through">
               ${product.originalPrice.toFixed(2)}
             </span>
             <span className="text-xl font-bold text-white font-mono">

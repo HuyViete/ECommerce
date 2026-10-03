@@ -17,7 +17,8 @@ import {
   Check, 
   Layers, 
   Cpu,
-  Download
+  Download,
+  ShoppingBag
 } from 'lucide-react';
 
 interface Props {
@@ -173,7 +174,7 @@ export default async function ProductDetailPage({ params }: Props) {
                 <span className="text-3xl sm:text-4xl font-black text-white font-mono">
                   ${product.price.toFixed(2)}
                 </span>
-                <span className="text-sm text-slate-500 line-through">
+                <span className="text-sm text-slate-400 line-through">
                   ${product.originalPrice.toFixed(2)}
                 </span>
                 <span className="text-xs text-slate-400 font-mono">{product.currency}</span>
@@ -207,6 +208,25 @@ export default async function ProductDetailPage({ params }: Props) {
                 <RotateCcw className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true" />
                 <span>{product.returnPolicy.returnWindowDays}-Day Insured Return Window</span>
               </div>
+            </div>
+
+            {/* Action Section - 100% Visual Parity with Bad Twin, but Fully Semantic */}
+            <div className="pt-2 flex flex-col sm:flex-row gap-4">
+              <button
+                type="button"
+                aria-label={`Acquire ${product.name} reference instrument`}
+                className="flex-1 py-4 px-6 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 shadow-xl bg-blue-600 hover:bg-blue-500 text-white shadow-blue-600/30 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer select-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <ShoppingBag className="w-5 h-5" aria-hidden="true" />
+                <span>Acquire Reference Instrument</span>
+              </button>
+
+              <Link
+                href="/products"
+                className="py-4 px-6 rounded-2xl bg-slate-900 border border-slate-700 hover:bg-slate-800 text-slate-200 font-semibold text-sm flex items-center justify-center transition-colors select-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                View Bag
+              </Link>
             </div>
 
           </div>

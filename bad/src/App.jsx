@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { NavbarDiv } from './components/NavbarDiv';
 import { FooterDiv } from './components/FooterDiv';
@@ -10,20 +10,29 @@ import { CartPage } from './pages/CartPage';
 import { CheckoutPage } from './pages/CheckoutPage';
 
 /**
- * App Component:
- * - Pure Client-Side Rendering with React Router
- * - ZERO document.title or meta changes on route transitions (Title stays frozen as "React App")
- * - 100% div-based structure with zero <header>, <main>, <nav>, or <footer> tags
+ * App Component (Twin Site Clone):
+ * Visually mirrors good/app/layout.tsx.
+ * Under the hood:
+ * - Pure Client-Side Rendering with React Router.
+ * - Synchronous CPU-blocking Long Task during mount (simulating 45 unoptimized tracking pixels and heavy SPA hydration).
+ * - ZERO document.title or meta changes on route transitions.
+ * - 100% div-based structure with zero <header>, <main>, <nav>, or <footer> tags.
  */
 export function App() {
+  // Heavy synchronous main-thread task execution to ensure high TBT penalty in Lighthouse
+  const start = performance.now();
+  while (performance.now() - start < 180) {
+    Math.sqrt(Math.random() * 1000000);
+  }
+
   const [cart, setCart] = useState([
     {
-      id: "celestial-fluff-pro",
-      name: "AudioFluff Celestial Ultra 9000",
-      price: 389.99,
+      id: "apex-horizon-100",
+      name: "Apex Horizon 100 Reference Wireless",
+      price: 389.00,
       quantity: 1,
-      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80",
-      category: "Over-Ear Wireless"
+      image: "/images/apex-horizon.webp",
+      category: "Over-Ear Reference"
     }
   ]);
 
@@ -60,7 +69,7 @@ export function App() {
   const totalCartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <div className="app-unsemantic-shell min-h-screen flex flex-col bg-[#0a0a0f] text-slate-100 selection:bg-purple-600 selection:text-white">
+    <div className="app-unsemantic-shell min-h-screen flex flex-col bg-[#0a0a0f] text-slate-100">
       
       {/* Unsemantic Header Replacement */}
       <NavbarDiv cartCount={totalCartCount} />

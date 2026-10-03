@@ -1,107 +1,94 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TokenBloatBadge } from './TokenBloatBadge';
-import { Star, ShoppingBag, Eye } from 'lucide-react';
+import { Star, ArrowRight, Gauge, Battery } from 'lucide-react';
 
 /**
- * ProductCardDiv:
- * - NO <article> or <li>
- * - NO <h3> or <h4> header tags (uses <div> with styling)
- * - NO <a> or <button> tags (uses <div> with onClick)
- * - Nested 8+ levels deep to deliberately waste parser context tokens.
+ * ProductCardDiv (Twin Site Clone):
+ * Visually identical to good/components/ProductCard.tsx.
+ * BUT 100% div-soup, zero semantic <article>, zero <h3>, zero <a> links with href.
+ * Missing alt tags and missing dimensions on <img> to trigger CLS and A11y flags.
  */
 export function ProductCardDiv({ product, onAddToCart }) {
   const navigate = useNavigate();
 
   return (
-    <div className="nest-level-1 group relative">
-      <div className="nest-level-2 h-full">
-        <div className="nest-level-3 rounded-2xl p-px bg-gradient-to-b from-slate-700/40 via-purple-900/20 to-slate-800/40 hover:from-purple-500/50 hover:to-cyan-500/50 transition-all duration-300">
-          <div className="nest-level-4 rounded-2xl bg-[#0f0f1b] h-full flex flex-col overflow-hidden glass-card">
-            
-            {/* Image Box - Deeply nested without semantic figure/figcaption */}
-            <div className="nest-level-5-image relative aspect-[4/3] w-full overflow-hidden bg-slate-950 flex items-center justify-center">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f1b] via-transparent to-black/20 pointer-events-none" />
-              
-              {/* Badge */}
-              <div className="absolute top-3 left-3">
-                <TokenBloatBadge label={product.badge} variant={product.id.includes('velvet') ? 'pink' : 'purple'} />
-              </div>
-
-              {/* Quick View overlay */}
-              <div 
-                onClick={() => navigate(`/products/${product.id}`)}
-                className="absolute inset-0 bg-purple-950/40 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer"
-              >
-                <div className="px-4 py-2 rounded-xl bg-purple-600 text-white font-medium text-xs flex items-center gap-1.5 shadow-xl shadow-purple-600/50 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                  <Eye className="w-3.5 h-3.5" />
-                  <span>Inspect Fluff</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Content Container - Zero Heading tags */}
-            <div className="nest-level-6-body p-5 flex-1 flex flex-col justify-between space-y-4">
-              
-              <div className="nest-level-7-meta space-y-2">
-                <div className="flex items-center justify-between text-xs text-slate-400">
-                  <span className="text-purple-400 font-medium">{product.category}</span>
-                  <div className="flex items-center gap-1 text-amber-400">
-                    <Star className="w-3.5 h-3.5 fill-amber-400" />
-                    <span>{product.rating}</span>
-                    <span className="text-slate-500">({product.reviewCount})</span>
-                  </div>
-                </div>
-
-                {/* Title substitute - <div> instead of <h3> */}
-                <div 
-                  onClick={() => navigate(`/products/${product.id}`)}
-                  className="card-title-substitute text-lg font-bold text-white group-hover:text-purple-300 transition-colors cursor-pointer line-clamp-1"
-                >
-                  {product.name}
-                </div>
-
-                {/* Hyperbolic fluff tagline */}
-                <div className="text-xs text-slate-400 italic line-clamp-2">
-                  "{product.tagline}"
-                </div>
-              </div>
-
-              {/* Price & Action Section - Zero buttons */}
-              <div className="nest-level-8-actions pt-3 border-t border-slate-800/80 flex items-center justify-between">
-                <div className="price-column flex flex-col">
-                  <span className="text-xs text-slate-500 line-through">
-                    ${product.originalPrice.toFixed(2)}
-                  </span>
-                  <span className="text-xl font-black bg-gradient-to-r from-purple-400 to-cyan-300 bg-clip-text text-transparent">
-                    ${product.price.toFixed(2)}
-                  </span>
-                </div>
-
-                {/* Add to Cart substitute - <div> instead of <button> */}
-                <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (onAddToCart) onAddToCart(product);
-                  }}
-                  className="add-to-cart-substitute px-3.5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 active:scale-95 text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-lg shadow-purple-600/30 transition-all duration-200"
-                >
-                  <ShoppingBag className="w-3.5 h-3.5" />
-                  <span>Acquire</span>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
+    <div className="group rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/50 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-lg hover:shadow-blue-500/10">
+      
+      {/* Unsemantic Image Container without figure, no explicit width/height, no alt */}
+      <div 
+        onClick={() => navigate(`/products/${product.id}`)}
+        className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950 cursor-pointer"
+      >
+        <img
+          src={product.image}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          loading="lazy"
+        />
+        <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-slate-700 text-[11px] font-mono text-blue-300 font-semibold">
+          SKU: {product.id}
         </div>
       </div>
+
+      {/* Body Content - purely <div> */}
+      <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+        
+        <div className="space-y-2">
+          <div className="flex items-center justify-between text-xs text-slate-400">
+            <span className="font-mono text-emerald-400 font-semibold">ApexAcoustics</span>
+            <div className="flex items-center gap-1 text-amber-400">
+              <Star className="w-3.5 h-3.5 fill-amber-400" />
+              <span className="font-bold">{product.rating}</span>
+              <span className="text-slate-500">({product.reviewCount})</span>
+            </div>
+          </div>
+
+          {/* Title substitute - <div> instead of <h3> or <a> */}
+          <div 
+            onClick={() => navigate(`/products/${product.id}`)}
+            className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-1 cursor-pointer"
+          >
+            {product.name}
+          </div>
+
+          <div className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+            {product.tagline}
+          </div>
+        </div>
+
+        {/* Factual Highlight Metrics */}
+        <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-800/80 text-[11px] font-mono">
+          <div className="flex items-center gap-1.5 text-slate-300">
+            <Gauge className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+            <span className="truncate">{product.specifications[0]?.label}: {product.specifications[0]?.value.split(' ')[0]}</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-slate-300">
+            <Battery className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+            <span className="truncate">{product.specifications[2]?.value || "Studio Wired"}</span>
+          </div>
+        </div>
+
+        {/* Price & Action Substitute - <div> instead of <a> or <button> */}
+        <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
+          <div className="flex flex-col">
+            <span className="text-xs text-slate-500 line-through">
+              ${product.originalPrice.toFixed(2)}
+            </span>
+            <span className="text-xl font-bold text-white font-mono">
+              ${product.price.toFixed(2)} <span className="text-xs text-slate-400 font-sans">USD</span>
+            </span>
+          </div>
+
+          <div
+            onClick={() => navigate(`/products/${product.id}`)}
+            className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center gap-1.5 shadow-lg shadow-blue-600/20 transition-all cursor-pointer select-none"
+          >
+            <span>Technical Specs</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </div>
+        </div>
+
+      </div>
+
     </div>
   );
 }

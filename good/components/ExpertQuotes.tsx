@@ -39,7 +39,7 @@ export function ExpertQuotes({ quotes }: Props) {
               <span className="font-bold text-white">{q.author}</span>
               <span className="text-purple-300">{q.role}</span>
               <cite className="not-italic text-slate-400">
-                {q.organization} • <span className="font-mono text-[11px] text-slate-500">{q.sourceDocument}</span>
+                {q.organization} • <span className="font-mono text-[11px] text-slate-400">{q.sourceDocument}</span>
               </cite>
             </figcaption>
           </figure>

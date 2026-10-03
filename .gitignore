@@ -44,3 +44,6 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Chat recovery log
+CHAT_HISTORY_RECOVERY.md

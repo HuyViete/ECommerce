@@ -1,16 +1,15 @@
-<!doctype html>
-<html lang="en">
+<html lang="invalid-iso-code">
   <head>
-    <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React App</title>
-    <meta name="description" content="Web site created using create-react-app" />
-    <!-- Intentionally zero OpenGraph tags, zero Twitter tags, zero JSON-LD Schema -->
+    <!-- Fails Accessibility: meta-viewport (weight 10) -->
+    <meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+    <link rel="alternate" hreflang="xx-invalid" href="http://localhost:5173" />
+    <link rel="canonical" href="http://broken-canonical-destination.internal/error" />
   </head>
-  <body class="bg-[#0a0a0f] text-slate-100 antialiased overflow-x-hidden selection:bg-purple-500 selection:text-white">
-    <!-- Client-Side Rendering Trap: Empty root with zero pre-rendered text -->
+  <body class="bg-[#0a0a0f] text-slate-700 antialiased overflow-x-hidden">
     <div id="root"></div>
+    <a href="http://telemetry-tracker.biz" target="_blank" style="font-size: 8px;">click here</a>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
